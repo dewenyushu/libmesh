@@ -239,6 +239,19 @@ public:
    */
   virtual void add (const T a, const SparseMatrix<T> & X) override;
 
+  /**
+   * Compute Y = A*X for matrix \p X.
+   */
+  void mat_mult (SparseMatrix<T> & X, SparseMatrix<T> & Y);
+
+  /**
+   * Add \p scalar* \p spm to the rows and cols of this matrix
+   */
+  void add_sparse_matrix (const SparseMatrix<T> & spm,
+                          const std::vector<numeric_index_type> & rows,
+                          const std::vector<numeric_index_type> & cols,
+                          const T scalar);
+
   virtual T operator () (const numeric_index_type i,
                          const numeric_index_type j) const override;
 
