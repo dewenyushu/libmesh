@@ -94,7 +94,6 @@ const Elem * PeriodicBoundaries::neighbor(boundary_id_type boundary_id,
         }
     }
 
-<<<<<<< HEAD
   // If we should have found a periodic neighbor but didn't then
   // either we're on a ghosted element with a remote periodic neighbor
   // or we're on a mesh with an inconsistent periodic boundary.
@@ -102,12 +101,6 @@ const Elem * PeriodicBoundaries::neighbor(boundary_id_type boundary_id,
                      (e->processor_id() != mesh.processor_id()),
                      "Periodic boundary neighbor not found");
   return remote_elem;
-=======
-  // Roy will add some AI-based fixes here.
-  // I simply comment it out so I can work on other stuffs
-  //libmesh_error_msg("Periodic boundary neighbor not found");
-  return nullptr;
->>>>>>> Clone and set mesh
 }
 
 } // namespace libMesh
