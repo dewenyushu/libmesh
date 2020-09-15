@@ -2455,8 +2455,8 @@ void ExodusII_IO_Helper::initialize_element_variables(std::vector<std::string> n
       for (auto block_id : current_set)
         {
           auto it = std::find(block_ids.begin(), block_ids.end(), block_id);
-          libmesh_error_msg_if(it == block_ids.end(),
-                               "ExodusII_IO_Helper: block id " << block_id << " not found in block_ids.");
+          if(it == block_ids.end())
+            continue;
 
           std::size_t block_index =
             std::distance(block_ids.begin(), it);
