@@ -725,7 +725,7 @@ void PetscMatrix<T>::print_personal(std::ostream & os) const
   // Print to screen if ostream is stdout
   if (os.rdbuf() == std::cout.rdbuf())
     {
-      ierr = MatView(_mat, PETSC_VIEWER_STDOUT_SELF);
+      ierr = MatView(_mat, NULL);
       LIBMESH_CHKERR(ierr);
     }
 
@@ -769,7 +769,7 @@ void PetscMatrix<T>::print_personal(std::ostream & os) const
       // of the file internally.  Since print_personal() takes a reference to
       // an ostream, we have to do an extra step...  print_personal() should probably
       // have a version that takes a string to get rid of this problem.
-      ierr = PetscViewerASCIIOpen( this->comm().get(),
+      ierr = PetscViewerASCIIOpen( PetscObjectComm((PetscObject)_mat,
                                    temp_filename.c_str(),
                                    &petsc_viewer);
       LIBMESH_CHKERR(ierr);
@@ -1197,6 +1197,10 @@ void PetscMatrix<T>::matrix_matrix_mult (SparseMatrix<T> & X_in, SparseMatrix<T>
 
   ierr = MatMatMult(_mat, X->_mat, MAT_INITIAL_MATRIX, PETSC_DEFAULT, &Y->_mat);
   LIBMESH_CHKERR(ierr);
+
+  // Specify that the new matrix is initialized and close it.
+  Y->_is_initialized = true;
+  Y->close();
 }
 
 template <typename T>
